@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const createError = require('../utils/appError');
 const Admin = require('../models/AdminSchema');
+const sendOTP = require('../utils/sendOTP');
 
 // Lockout Configuration
 const LOCKOUT_CONFIG = [
@@ -189,4 +190,107 @@ exports.getTokenById = async (req, res) => {
             message: 'Internal server error, Try again',
         });
     }
+};
+
+exports.forgotPassword = async (req, res) => {
+  const { phone } = req.body;
+
+  if (!phone) {
+    return res.status(400).json({
+      success: false,
+      message: "Please provide a phone number!",
+    });
+  }
+
+  try {
+    const user = await User.findOne({ phone: phone });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
+    const randomOTP = Math.floor(100000 + Math.random() * 900000);
+
+    user.resetPasswordOTP = randomOTP;
+    user.resetPasswordExpires = Date.now() + 600000;
+    await user.save();
+
+    const isSent = await sendOTP(phone, randomOTP);
+
+    if (!isSent) {
+      return res.status(500).json({
+        success: false,
+        message: "Error sending OTP",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "OTP sent successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { phone, otp, password } = req.body;
+
+  if (!phone || !otp || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Please enter all fields",
+    });
+  }
+
+  try {
+    const user = await User.findOne({ phone: phone });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    // Otp to integer
+    const otpToInteger = parseInt(otp);
+
+    if (user.resetPasswordOTP !== otpToInteger) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP",
+      });
+    }
+
+    if (user.resetPasswordExpires < Date.now()) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP expired",
+      });
+    }
+
+    const randomSalt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, randomSalt);
+
+    user.password = hashedPassword;
+    user.resetPasswordOTP = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
 };
