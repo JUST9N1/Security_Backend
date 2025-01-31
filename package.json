@@ -24,6 +24,7 @@
     "https": "^1.0.0",
     "init": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
+    "mkcert": "^3.2.0",
     "moment": "^2.30.1",
     "mongoose": "^8.4.0",
     "nodemon": "^3.1.1",

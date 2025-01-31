@@ -65,12 +65,26 @@ app.use((err, req, res, next) => {
 );
 
 
-const options = {
-    key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-    cert: fs.readFileSync(path.resolve(__dirname, 'server.crt')),
+// const options = {
+//     key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+//     cert: fs.readFileSync(path.resolve(__dirname, 'server.crt')),
+// };
+
+// https.createServer(options, app).listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// }
+
+app.get('/test', (req, res) => {
+    res.send('Hello World, test api is working.');
+})
+
+const httpsOptions = {
+    key: fs.readFileSync('./localhost-key.pem'),
+    cert: fs.readFileSync('./localhost.pem'),
 };
 
-https.createServer(options, app).listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-}
-);
+https.createServer(httpsOptions, app).listen(PORT, () => {
+    console.log(`Secure server running at https://localhost:${PORT}`);
+})
+
+
