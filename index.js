@@ -3,6 +3,7 @@ const connectDatabase = require('./database/database');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const https= require('https');
+const session = require('express-session');
 
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
@@ -23,9 +24,24 @@ const corsOptions = {
     optionsSuccessStatus: 204 // Some legacy browsers choke on 204
 };
 
+// Middleware
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
+
+// Add session middleware
+app.use(
+    session({
+        secret: 'your_secret_key', // Replace with a strong secret
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false, // Set to true in production when using HTTPS
+            httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not accessible via JavaScript
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
+        },
+    })
+);
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
