@@ -96,7 +96,7 @@ exports.completeAppointment = async (req, res) => {
     );
 
     if (!booking) {
-      console.log(`Complete Appointment: Booking not found for bookingId: ${bookingId}`);
+      // console.log(`Complete Appointment: Booking not found for bookingId: ${bookingId}`);
       return res.status(404).json({
         success: false,
         message: "Booking not found",
@@ -109,7 +109,7 @@ exports.completeAppointment = async (req, res) => {
       booking,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({
       success: false,
       message: "Error completing the appointment",
@@ -120,7 +120,7 @@ exports.completeAppointment = async (req, res) => {
 exports.cancelAppointment = async (req, res) => {
   try {
     const { bookingId } = req.params;
-    console.log(`Cancel Appointment: Received bookingId: ${bookingId}`);
+    // console.log(`Cancel Appointment: Received bookingId: ${bookingId}`);
     const booking = await Booking.findByIdAndUpdate(
       bookingId,
       { status: "cancelled" },
@@ -128,7 +128,7 @@ exports.cancelAppointment = async (req, res) => {
     );
 
     if (!booking) {
-      console.log(`Cancel Appointment: Booking not found for bookingId: ${bookingId}`);
+      // console.log(`Cancel Appointment: Booking not found for bookingId: ${bookingId}`);
       return res.status(404).json({
         success: false,
         message: "Booking not found",
@@ -141,7 +141,7 @@ exports.cancelAppointment = async (req, res) => {
       booking,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({
       success: false,
       message: "Error cancelling the appointment",
