@@ -6,7 +6,7 @@ const { authenticate, restrict } = require('../auth/verifyToken.js');
 const router = express.Router({mergeParams: true});
 
 
-
+// Review Routes
 router
 .route('/')
 .get(getAllReviews)
