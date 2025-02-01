@@ -64,9 +64,7 @@ app.use((err, req, res, next) => {
 }
 );
 
-app.get('/test', (req, res) => {
-    res.send('Hello World, test api is working.');
-})
+
 
 const httpsOptions = {
     key: fs.readFileSync('./localhost-key.pem'),
