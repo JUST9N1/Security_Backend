@@ -5,8 +5,6 @@ const { authenticate, restrict } = require('../auth/verifyToken.js');
 
 const router = express.Router({mergeParams: true});
 
-// worker/workerId/reviews
-
 
 
 router

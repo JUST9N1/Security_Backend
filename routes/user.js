@@ -15,4 +15,3 @@ router.get('/appointments/my-appointments',authenticate, restrict(["patient"]), 
 
 module.exports = router;
 
-// authenticate, restrict(["admin"]),
