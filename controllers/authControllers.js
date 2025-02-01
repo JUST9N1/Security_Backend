@@ -231,7 +231,7 @@ exports.forgotPassword = async (req, res) => {
       message: "OTP sent successfully",
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: false,
       message: "Internal Server Error",
@@ -287,7 +287,7 @@ exports.resetPassword = async (req, res) => {
       message: "Password reset successfully",
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",

@@ -77,7 +77,7 @@ exports.getCheckoutSession = async (req, res) => {
       session,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({
       success: false,
       message: 'Error creating checkout session',
@@ -88,7 +88,7 @@ exports.getCheckoutSession = async (req, res) => {
 exports.completeAppointment = async (req, res) => {
   try {
     const { bookingId } = req.params;
-    console.log(`Complete Appointment: Received bookingId: ${bookingId}`);
+    // console.log(`Complete Appointment: Received bookingId: ${bookingId}`);
     const booking = await Booking.findByIdAndUpdate(
       bookingId,
       { status: "completed" },
