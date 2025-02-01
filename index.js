@@ -18,10 +18,10 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 const corsOptions = {
-    origin: 'https://localhost:5173', // Allow requests from this origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
-    credentials: true, // Allow cookies to be sent
-    optionsSuccessStatus: 204 // Some legacy browsers choke on 204
+    origin: 'https://localhost:5173', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
+    credentials: true, 
+    optionsSuccessStatus: 204 
 };
 
 // Middleware
