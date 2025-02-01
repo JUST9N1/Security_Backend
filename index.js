@@ -32,7 +32,7 @@ app.use(express.json());
 // Add session middleware
 app.use(
     session({
-        secret: 'your_secret_key', // Replace with a strong secret
+        secret: 'your_secret_key', 
         resave: false,
         saveUninitialized: false,
         cookie: {
@@ -63,16 +63,6 @@ app.use((err, req, res, next) => {
     });
 }
 );
-
-
-// const options = {
-//     key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-//     cert: fs.readFileSync(path.resolve(__dirname, 'server.crt')),
-// };
-
-// https.createServer(options, app).listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// }
 
 app.get('/test', (req, res) => {
     res.send('Hello World, test api is working.');
