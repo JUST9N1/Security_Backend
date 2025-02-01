@@ -192,6 +192,7 @@ exports.getTokenById = async (req, res) => {
     }
 };
 
+// OTP for phone number
 exports.forgotPassword = async (req, res) => {
   const { phone } = req.body;
 
@@ -239,6 +240,7 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
+// executed function for reset password
 exports.resetPassword = async (req, res) => {
   const { phone, otp, password } = req.body;
 
