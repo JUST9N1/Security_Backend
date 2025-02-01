@@ -9,6 +9,7 @@ const {
 
 const router = express.Router();
 
+//Worker Routes
 router.post('/checkout-session/:workerId', authenticate, getCheckoutSession);
 router.put('/complete/:bookingId', authenticate, completeAppointment);
 router.put('/cancel/:bookingId', authenticate, cancelAppointment);
