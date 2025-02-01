@@ -36,8 +36,8 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            secure: false, // Set to true in production when using HTTPS
-            httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not accessible via JavaScript
+            secure: false, 
+            httpOnly: true, 
             maxAge: 1000 * 60 * 60 * 24, // 1 day
         },
     })
