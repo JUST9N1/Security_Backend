@@ -44,18 +44,18 @@ const userSchema = new mongoose.Schema({
   ],
   loginAttempts: {
     type: Number,
-    default: 0, // Track the number of failed login attempts
+    default: 0, 
   },
   lockUntil: {
-    type: Date, // Lockout expiration timestamp
+    type: Date, 
     default: null,
   },
   passwordHistory: {
-    type: [String], // Array to store hashed passwords for reuse prevention
+    type: [String], 
     default: [],
   },
   passwordLastChanged: {
-    type: Date, // Track the last time the password was changed
+    type: Date, 
     default: null,
   },
 
@@ -78,14 +78,14 @@ userSchema.virtual("isLocked").get(function () {
 
 // Pre-save middleware to limit password history
 userSchema.pre("save", async function (next) {
-  const PASSWORD_HISTORY_LIMIT = 5; // Max number of past passwords to store
+  const PASSWORD_HISTORY_LIMIT = 5; 
   if (this.isModified("password")) {
-    // Ensure the password history only keeps the last PASSWORD_HISTORY_LIMIT entries
+    
     if (this.passwordHistory.length >= PASSWORD_HISTORY_LIMIT) {
-      this.passwordHistory.shift(); // Remove the oldest password
+      this.passwordHistory.shift(); 
     }
-    this.passwordHistory.push(this.password); // Add the new password to history
-    this.passwordLastChanged = Date.now(); // Update the password change timestamp
+    this.passwordHistory.push(this.password); 
+    this.passwordLastChanged = Date.now();
   }
   next();
 });
